@@ -244,9 +244,9 @@ def __(mo):
 @app.cell
 def __(np):
     def normale(triangles):
-            v1 = triangles[:, 1] - triangles[:, 0]
-            v2 = triangles[:, 2] - triangles[:, 0]
-            cross = np.cross(v1, v2)  #on fait le produit vectoriel pour avoir la normale
+            vect1 = triangles[:, 1] - triangles[:, 0]
+            vect2 = triangles[:, 2] - triangles[:, 0]
+            cross = np.cross(vect1, vect2)  #on fait le produit vectoriel pour avoir la normale
             norms = np.linalg.norm(cross, axis=1, keepdims=True)
             return (cross / norms)  #on normalise
 
@@ -936,12 +936,12 @@ def __(
         #on renvoie la forme finale (que j'ai appelé exprès "Final form")
         return objets["Final form"]
 
-    def jcad_to_stl(jcad_file, output_stl_file):
+    def jcad_to_stl(jcad_file, nom_sortie):
         #d'abord on convertit en sdf...
         fichier_sdf = jcad_to_sdf(jcad_file)
 
         #...puis en stl  (comme dans la cellule précédente)
-        fichier_sdf.save(output_stl_file)
+        fichier_sdf.save(nom_sortie)
 
 
     jcad_to_stl("data/demo_jcad.jcad", "data/demo_jcad.stl")
