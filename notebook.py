@@ -247,7 +247,7 @@ def __(np):
             vect1 = triangles[:, 1] - triangles[:, 0]
             vect2 = triangles[:, 2] - triangles[:, 0]
             cross = np.cross(vect1, vect2)  #on fait le produit vectoriel pour avoir la normale
-            norms = np.linalg.norm(cross, axis=1, keepdims=True)
+            norms = np.linalg.norm(cross, axis=1, keepdims=True) #sans keepdims, ça marche pas, mais je sais pas trop pourquoi...
             return (cross / norms)  #on normalise
 
 
@@ -538,7 +538,7 @@ def __(np):
         cote2 = triangles[:, 2] - triangles[:, 0]
         normale = np.cross(cote1, cote2)
         normale = normale / np.linalg.norm(normale, axis=1, keepdims=True)
-        non_main_droite = np.sum(np.dot(normals, normale.T).diagonal() < 0)
+        non_main_droite = np.sum(np.dot(normals, normale.T).diagonal() < 0) #on fait le ps
 
         total_normale = normals.shape[0]
         pourcentage = 100 * (norme_mauvaise + non_main_droite) / total_normale
@@ -613,12 +613,12 @@ def __(bilan, normals1, np, triangles1):
 
     def fix_cube(triangles, normals):
         #règle 2
-        cote = triangles[:, 1:] - triangles[:, :1]  #on prend 2 côtés pour le prouit vectoriel
+        cote = triangles[:, 1:] - triangles[:, :1]  #on prend 2 côtés pour le produit vectoriel
         nouvelles_norm = np.cross(cote[:, 0], cote[:, 1])
         nouvelles_norm /= np.linalg.norm(nouvelles_norm, axis=1, keepdims=True)
         normals = nouvelles_norm
 
-        #la règle 3 est résolue par la même occasion
+        #la règle 3 est résolue par la même occasion (?!)
         #règle 4
         barycentre_z = np.mean(triangles[:, :, 2], axis=1)
         indices_tris = np.argsort(barycentre_z)
